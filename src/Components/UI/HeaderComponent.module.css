@@ -4,12 +4,16 @@
 }
 
 .background-image img {
-    width: 70rem;
+    width: 70%;
 }
 
 @media only screen and (max-width: 900px) {
     .background-image img {
-        width: 25rem;
+        width: 100%;
+    }
+
+    .background-image {
+        padding-top: 10rem;
     }
 }
 
