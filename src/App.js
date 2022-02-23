@@ -19,7 +19,7 @@ function App() {
   return (
     <ScrollContainer>
       <ScrollPage page={0}>
-        <Animator animation={batch(Fade(), MoveOut(0, -200))}>
+        <Animator animation={batch(Fade(), Move())}>
           <HeaderComponent />
         </Animator>
       </ScrollPage>
