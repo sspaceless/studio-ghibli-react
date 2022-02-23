@@ -1,0 +1,22 @@
+.background-image {
+    display: flex;
+    justify-content: center;
+}
+
+.background-image img {
+    width: 80rem;
+}
+
+@media only screen and (max-width: 900px) {
+    .background-image {
+        opacity: 1;
+        transform: translate(0px, 0px) translate(-50%, -50%);
+        left: 195px;
+        top: 382px;
+        position: fixed;
+    }
+
+    .background-image img {
+        width: 25rem;
+    }
+}
