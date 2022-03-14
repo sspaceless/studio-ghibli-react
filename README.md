@@ -1,3 +1,3 @@
 # Studio Ghibli Fan-site
 Simple __React.JS__ applicaiont using __Studio Ghubli API__.
-GitHub Pages: 
+The site was built using [GitHub Pages](https://pages.github.com/).
