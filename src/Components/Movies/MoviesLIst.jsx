@@ -1,8 +1,6 @@
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable guard-for-in */
-/* eslint-disable no-unused-vars */
 import { useCallback, useEffect, useState } from 'react';
 import classes from './MoviesList.module.css';
+import MoviesListItem from './MoviesListItem';
 
 const MoviesLIst = () => {
   const [movies, setMovies] = useState([]);
@@ -21,30 +19,25 @@ const MoviesLIst = () => {
 
       const data = await response.json();
 
-      const loadedMovies = [];
-      for (const key in data) {
-        const movie = {
-          description: data[key].description,
-          director: data[key].director,
-          id: data[key].id,
-          posterUrl: data[key].image,
-          locations: data[key].locations,
-          movieBanner: data[key].movie_banner,
-          originalTitle: data[key].original_title,
-          originalTitleRomanised: data[key].original_title_romanised,
-          people: data[key].people,
-          producer: data[key].producer,
-          releaseDate: data[key].release_date,
-          rating: data[key].rt_score,
-          runningTime: data[key].running_time,
-          species: data[key].species,
-          title: data[key].title,
-          movieUrl: data[key].url,
-          vehicles: data[key].vehicles
-        };
-        loadedMovies.push(movie);
-      }
-
+      const loadedMovies = data.map((item) => ({
+        description: item.description,
+        director: item.director,
+        id: item.id,
+        posterUrl: item.image,
+        locations: item.locations,
+        movieBanner: item.movie_banner,
+        originalTitle: item.original_title,
+        originalTitleRomanised: item.original_title_romanised,
+        people: item.people,
+        producer: item.producer,
+        releaseDate: item.release_date,
+        rating: item.rt_score,
+        runningTime: item.running_time,
+        species: item.species,
+        title: item.title,
+        movieUrl: item.url,
+        vehicles: item.vehicles
+      }));
       setMovies(loadedMovies);
     } catch (e) {
       setError(e.message);
@@ -55,14 +48,14 @@ const MoviesLIst = () => {
 
   useEffect(() => {
     fetchMoviesHandler();
-  }, []);
+  }, [fetchMoviesHandler]);
 
   let content = <p>Found no movies.</p>;
 
   if (movies.length > 0) {
     content = movies.map((movie) => {
       return (
-        <MoviesLIst
+        <MoviesListItem
           key={movie.id}
           id={movie.id}
           title={movie.title}
