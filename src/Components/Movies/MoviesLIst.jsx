@@ -1,6 +1,8 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable guard-for-in */
+/* eslint-disable no-unused-vars */
 import { useCallback, useEffect, useState } from 'react';
 import classes from './MoviesList.module.css';
-import MoviesListItem from './MoviesListItem';
 
 const MoviesLIst = () => {
   const [movies, setMovies] = useState([]);
@@ -19,12 +21,9 @@ const MoviesLIst = () => {
 
       const data = await response.json();
 
-      console.log(data);
-
       const loadedMovies = [];
-
-      data.array.forEach(() => {
-        /* const movieData = {
+      for (const key in data) {
+        const movie = {
           description: data[key].description,
           director: data[key].director,
           id: data[key].id,
@@ -42,11 +41,11 @@ const MoviesLIst = () => {
           title: data[key].title,
           movieUrl: data[key].url,
           vehicles: data[key].vehicles
-        }; */
+        };
+        loadedMovies.push(movie);
+      }
 
-        loadedMovies.push({});
-        setMovies(loadedMovies);
-      });
+      setMovies(loadedMovies);
     } catch (e) {
       setError(e.message);
     }
@@ -56,14 +55,14 @@ const MoviesLIst = () => {
 
   useEffect(() => {
     fetchMoviesHandler();
-  }, [fetchMoviesHandler]);
+  }, []);
 
   let content = <p>Found no movies.</p>;
 
   if (movies.length > 0) {
     content = movies.map((movie) => {
       return (
-        <MoviesListItem
+        <MoviesLIst
           key={movie.id}
           id={movie.id}
           title={movie.title}
