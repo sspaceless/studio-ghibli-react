@@ -1,6 +1,6 @@
-import classes from "./MoviesList.module.css";
-import { useCallback, useEffect, useState } from "react";
-import MoviesListItem from "./MoviesListItem";
+import { useCallback, useEffect, useState } from 'react';
+import classes from './MoviesList.module.css';
+import MoviesListItem from './MoviesListItem';
 
 const MoviesLIst = () => {
   const [movies, setMovies] = useState([]);
@@ -12,17 +12,19 @@ const MoviesLIst = () => {
     setError(null);
 
     try {
-      const response = await fetch("https://ghibliapi.herokuapp.com/films");
+      const response = await fetch('https://ghibliapi.herokuapp.com/films');
       if (!response.ok) {
-        throw new Error("Something went wrong!");
+        throw new Error('Something went wrong!');
       }
 
       const data = await response.json();
 
+      console.log(data);
+
       const loadedMovies = [];
 
-      for (const key in data) {
-        loadedMovies.push({
+      data.array.forEach(() => {
+        /* const movieData = {
           description: data[key].description,
           director: data[key].director,
           id: data[key].id,
@@ -39,12 +41,14 @@ const MoviesLIst = () => {
           species: data[key].species,
           title: data[key].title,
           movieUrl: data[key].url,
-          vehicles: data[key].vehicles,
-        });
+          vehicles: data[key].vehicles
+        }; */
+
+        loadedMovies.push({});
         setMovies(loadedMovies);
-      }
-    } catch (error) {
-      setError(error.message);
+      });
+    } catch (e) {
+      setError(e.message);
     }
 
     setIsLoading(false);
