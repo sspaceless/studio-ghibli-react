@@ -10,5 +10,5 @@ export default Card;
 
 Card.propTypes = {
   className: propTypes.string.isRequired,
-  children: propTypes.element.isRequired
+  children: propTypes.element.isRequired,
 };
