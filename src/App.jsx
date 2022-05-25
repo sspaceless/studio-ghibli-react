@@ -2,9 +2,9 @@ import { Route, Routes } from 'react-router';
 import { getAuth } from 'firebase/auth';
 import { AuthProvider, useFirebaseApp } from 'reactfire';
 import Header from './Components/Header';
-import GhibliLogo from './Components/GhibliLogo';
-import Auth from './Components/Auth/Auth';
 import MoviesList from './Components/Movies/MoviesList';
+import Auth from './Components/Auth/Auth';
+import GhibliLogo from './Components/GhibliLogo';
 
 const App = () => {
   const app = useFirebaseApp();
