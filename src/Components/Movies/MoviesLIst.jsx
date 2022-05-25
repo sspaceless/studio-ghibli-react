@@ -4,7 +4,7 @@ import classes from './MoviesList.module.css';
 import MoviesListItem from './MoviesListItem';
 import { URL_FILMS } from '../../config';
 
-const MoviesLIst = () => {
+const MoviesList = () => {
   const processData = (data) => data.map((item) => ({
     description: item.description,
     director: item.director,
@@ -63,4 +63,4 @@ const MoviesLIst = () => {
   return <div className={classes.movies}>{content}</div>;
 };
 
-export default MoviesLIst;
+export default MoviesList;
