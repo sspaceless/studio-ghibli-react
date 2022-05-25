@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import useHttp from '../../hooks/use-http';
-import classes from './MoviesList.module.css';
 import MoviesListItem from './MoviesListItem';
 import { URL_FILMS } from '../../config';
+import classes from './MoviesList.module.css';
 
 const MoviesList = () => {
   const processData = (data) => data.map((item) => ({
