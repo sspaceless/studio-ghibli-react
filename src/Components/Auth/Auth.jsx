@@ -1,3 +1,10 @@
+import Typography from '@mui/material/Typography';
+import GoogleIcon from '@mui/icons-material/Google';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card';
+import Box from '@mui/material/Box';
+
 import propTypes from 'prop-types';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
@@ -7,10 +14,9 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
 } from 'firebase/auth';
-import GoogleButton from 'react-google-button';
-import Card from '../UI/Card';
-import classes from './Auth.module.css';
+
 import AuthForm from './AuthForm';
+import formWrapperStyles from './AuthStyles';
 
 const Auth = (props) => {
   const { auth } = props;
@@ -18,9 +24,14 @@ const Auth = (props) => {
   const navigate = useNavigate();
   const googleAuthProvider = new GoogleAuthProvider();
 
-  const signInButtonClickHandler = (values) => {
+  const signInButtonClickHandler = async (values) => {
     const { email, password } = values;
-    signInWithEmailAndPassword(auth, email, password);
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate('/');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const signUpButtonClickHandler = async (values) => {
@@ -48,32 +59,50 @@ const Auth = (props) => {
 
   const changeAuthMethodButtonText = isUserNew ? 'Sign In' : 'Create  account';
   const authProps = isUserNew
-    ? { onAuth: signInButtonClickHandler, buttonText: 'Sign up' }
-    : { onAuth: signUpButtonClickHandler, buttonText: 'Sign in' };
+    ? { onAuth: signUpButtonClickHandler, buttonText: 'Sign up' }
+    : { onAuth: signInButtonClickHandler, buttonText: 'Sign in' };
 
   return (
-    <div className={classes['auth-window']}>
-      <Card className={classes.auth}>
-        <>
-          <AuthForm onSubmit={authProps.onAuth} buttonText={authProps.buttonText} />
-          <GoogleButton onClick={signInWithGoogleHandler} />
-          <p> or </p>
-          <button type="button" onClick={changeAuthMethodButtonHandler}>
+    <Grid
+      container
+      direction="column"
+      justifyContent="center"
+      alignItems="center"
+      style={{ height: '100vh' }}
+    >
+      <Card sx={formWrapperStyles}>
+        <AuthForm onSubmit={authProps.onAuth} buttonText={authProps.buttonText} />
+        <Box p={1} sx={{ width: '100%' }}>
+          <Button
+            variant="outlined"
+            color="secondary"
+            fullWidth
+            onClick={signInWithGoogleHandler}
+            startIcon={<GoogleIcon />}
+          >
+            Sign in with Google
+          </Button>
+        </Box>
+        <Typography variant="p"> or </Typography>
+        <Box p={1} sx={{ width: '100%' }}>
+          <Button
+            variant="outlined"
+            color="secondary"
+            fullWidth
+            onClick={changeAuthMethodButtonHandler}
+          >
             {changeAuthMethodButtonText}
-          </button>
-        </>
+          </Button>
+        </Box>
       </Card>
-    </div>
+    </Grid>
   );
 };
 
 export default Auth;
 
 Auth.propTypes = {
-  auth: propTypes.oneOfType([
-    propTypes.func,
-    propTypes.object,
-  ]),
+  auth: propTypes.oneOfType([propTypes.func, propTypes.object]),
 };
 
 Auth.defaultProps = {

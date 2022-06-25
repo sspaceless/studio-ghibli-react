@@ -1,36 +1,21 @@
+import Grid from '@mui/material/Grid';
+import Slide from '@mui/material/Slide';
+
 import { useEffect } from 'react';
 import useHttp from '../../hooks/use-http';
-import classes from './MoviesList.module.css';
+import processApiData from '../../modules/process-api-data';
+
 import MoviesListItem from './MoviesListItem';
+import loadingGif from '../../assets/ghibli-loading.gif';
 import { URL_FILMS } from '../../config';
 
 const MoviesList = () => {
-  const processData = (data) => data.map((item) => ({
-    description: item.description,
-    director: item.director,
-    id: item.id,
-    posterUrl: item.image,
-    locations: item.locations,
-    movieBanner: item.movie_banner,
-    originalTitle: item.original_title,
-    originalTitleRomanised: item.original_title_romanised,
-    people: item.people,
-    producer: item.producer,
-    releaseDate: item.release_date,
-    rating: item.rt_score,
-    runningTime: item.running_time,
-    species: item.species,
-    title: item.title,
-    movieUrl: item.url,
-    vehicles: item.vehicles,
-  }));
-
   const {
     fetchDataHandler: fetchMoviesHandler,
     data: movies,
     isLoading,
     error,
-  } = useHttp(URL_FILMS, processData);
+  } = useHttp(URL_FILMS, processApiData);
 
   useEffect(() => {
     fetchMoviesHandler();
@@ -56,11 +41,20 @@ const MoviesList = () => {
     content = <p>{error}</p>;
   }
 
-  if (isLoading) {
-    content = <p>Loading...</p>;
-  }
-
-  return <div className={classes.movies}>{content}</div>;
+  return (
+    <>
+      <Slide in={isLoading} direction="down" timeout={500}>
+        <Grid container flexDirection="column" alignItems="center">
+          {isLoading && <Grid item xs={1} component="img" src={loadingGif} alt="loading-animation" />}
+        </Grid>
+      </Slide>
+      <Slide in={!isLoading} direction="up" timeout={500} mountOnEnter>
+        <Grid container flexDirection="column" alignItems="center">
+          {content}
+        </Grid>
+      </Slide>
+    </>
+  );
 };
 
 export default MoviesList;
