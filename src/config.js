@@ -1,4 +1,4 @@
-export const URL_FILMS = 'https://ghibliapi.herokuapp.com/films';
+export const API_URL = 'https://ghibliapi.herokuapp.com/films';
 export const FIREBASE_CONFIG = {
   apiKey: 'AIzaSyAg0zfdJiaHnCXs3AuXIm3FQYpxp5Vpfj0',
   authDomain: 'studio-ghibli-fansite.firebaseapp.com',

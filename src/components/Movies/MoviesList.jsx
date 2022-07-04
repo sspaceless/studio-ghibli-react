@@ -1,25 +1,16 @@
 import Grid from '@mui/material/Grid';
 import Slide from '@mui/material/Slide';
+import Typography from '@mui/material/Typography';
 
-import { useEffect } from 'react';
-import useHttp from '../../hooks/use-http';
-import processApiData from '../../modules/process-api-data';
+import { useSelector } from 'react-redux';
 
 import MoviesListItem from './MoviesListItem';
 import loadingGif from '../../assets/ghibli-loading.gif';
-import { URL_FILMS } from '../../config';
 
 const MoviesList = () => {
-  const {
-    fetchDataHandler: fetchMoviesHandler,
-    data: movies,
-    isLoading,
-    error,
-  } = useHttp(URL_FILMS, processApiData);
-
-  useEffect(() => {
-    fetchMoviesHandler();
-  }, [fetchMoviesHandler]);
+  const error = useSelector((state) => state.moviesData.error);
+  const movies = useSelector((state) => state.moviesData.movies);
+  const isLoading = useSelector((state) => state.moviesData.isLoading);
 
   let content = <p>Found no movies.</p>;
 
@@ -45,11 +36,23 @@ const MoviesList = () => {
     <>
       <Slide in={isLoading} direction="down" timeout={500}>
         <Grid container flexDirection="column" alignItems="center">
-          {isLoading && <Grid item xs={1} component="img" src={loadingGif} alt="loading-animation" />}
+          {isLoading && (
+            <Grid item xs={1} component="img" src={loadingGif} alt="loading-animation" />
+          )}
         </Grid>
       </Slide>
       <Slide in={!isLoading} direction="up" timeout={500} mountOnEnter>
         <Grid container flexDirection="column" alignItems="center">
+          {!isLoading && (
+            <Grid item mt={10} display="flex" flexDirection="column" alignItems="center">
+              <Typography variant="h2" color="white">
+                Studio Ghibli
+              </Typography>
+              <Typography variant="h3" color="white">
+                スタジオジブリ
+              </Typography>
+            </Grid>
+          )}
           {content}
         </Grid>
       </Slide>
