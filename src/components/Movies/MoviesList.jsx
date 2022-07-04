@@ -1,6 +1,6 @@
 import Grid from '@mui/material/Grid';
 import Slide from '@mui/material/Slide';
-import { Typography } from '@mui/material';
+import Typography from '@mui/material/Typography';
 
 import { useSelector } from 'react-redux';
 
@@ -44,9 +44,12 @@ const MoviesList = () => {
       <Slide in={!isLoading} direction="up" timeout={500} mountOnEnter>
         <Grid container flexDirection="column" alignItems="center">
           {!isLoading && (
-            <Grid item mt={10}>
-              <Typography variant="h1" color="white">
+            <Grid item mt={10} display="flex" flexDirection="column" alignItems="center">
+              <Typography variant="h2" color="white">
                 Studio Ghibli
+              </Typography>
+              <Typography variant="h3" color="white">
+                スタジオジブリ
               </Typography>
             </Grid>
           )}
