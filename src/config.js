@@ -7,3 +7,6 @@ export const FIREBASE_CONFIG = {
   messagingSenderId: '525862686392',
   appId: '1:525862686392:web:328a6474faf6337e4c2e4d',
 };
+
+export const USERS_COLLECTION = 'USERS';
+export const BOOKMARKS_FIELD = 'BOOKMARKS';

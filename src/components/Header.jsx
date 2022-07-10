@@ -24,8 +24,7 @@ const Header = () => {
   const navigate = useNavigate();
 
   const auth = useAuth();
-  const user = useUser();
-  const { data: userData } = user;
+  const { data: userData } = useUser();
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -44,7 +43,7 @@ const Header = () => {
   };
 
   const signOutButtonClickHandler = async () => {
-    console.log('asd');
+    handleCloseUserMenu();
     try {
       await signOut(auth);
       navigate('/');

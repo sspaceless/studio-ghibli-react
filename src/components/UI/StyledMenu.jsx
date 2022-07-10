@@ -12,9 +12,11 @@ const StyledMenu = (props) => {
       anchorEl={anchorEl}
       anchorOrigin={{
         vertical: 'top',
+        horizontal: 'center',
       }}
       transformOrigin={{
         vertical: 'top',
+        horizontal: 'center',
       }}
       open={open}
       onClose={onClose}

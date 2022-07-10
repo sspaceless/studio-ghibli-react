@@ -1,12 +1,7 @@
 import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid';
 import Divider from '@mui/material/Divider';
-import StarIcon from '@mui/icons-material/Star';
 import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import WatchLaterOutlinedIcon from '@mui/icons-material/WatchLaterOutlined';
 
 import propTypes from 'prop-types';
 
@@ -16,10 +11,11 @@ import {
   posterStyles,
   infoStyles,
 } from './MovieListItemStyles';
-import StyledRating from '../UI/StyledRating';
+import BookmarksButtons from './BookmarksButtons';
+import RatingBar from './RatingBar';
 
 const MoviesListItem = (props) => {
-  const { title, originalTitle, originalTitleRomanised, description, posterUrl } = props;
+  const { id, title, originalTitle, originalTitleRomanised, description, posterUrl } = props;
 
   const previewDescription = description.length > 301
     ? `${description.match(/^.{301}\w*/)}...`
@@ -43,25 +39,11 @@ const MoviesListItem = (props) => {
               </Typography>
               <Grid container my={1} display="flex" flexDirection="row">
                 <Grid item mr={2} display="flex" flexDirection="column" alignItems="center">
-                  <StyledRating
-                    name="user-feedback"
-                    value={0}
-                    precision={1}
-                    emptyIcon={<StarIcon style={{ opacity: 0.55 }} />}
-                  />
-                  <Typography variant="p"> 4.2 (123 votes)</Typography>
+                  <RatingBar />
                 </Grid>
                 <Divider orientation="vertical" flexItem />
                 <Grid item mx={1} display="flex" flexDirection="row" alignItems="center">
-                  <IconButton color="inherit">
-                    <WatchLaterOutlinedIcon />
-                  </IconButton>
-                  <IconButton color="inherit">
-                    <DoneOutlineIcon />
-                  </IconButton>
-                  <IconButton color="inherit">
-                    <FavoriteBorderIcon />
-                  </IconButton>
+                  <BookmarksButtons id={id} />
                 </Grid>
               </Grid>
               <Typography variant="p" align="justify">
@@ -78,6 +60,7 @@ const MoviesListItem = (props) => {
 export default MoviesListItem;
 
 MoviesListItem.propTypes = {
+  id: propTypes.string.isRequired,
   title: propTypes.string.isRequired,
   originalTitle: propTypes.string.isRequired,
   originalTitleRomanised: propTypes.string.isRequired,

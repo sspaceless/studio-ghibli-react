@@ -2,28 +2,44 @@ import Grid from '@mui/material/Grid';
 import Slide from '@mui/material/Slide';
 import Typography from '@mui/material/Typography';
 
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useFirestore, useUser } from 'reactfire';
+import { useSelector, useDispatch } from 'react-redux';
 
-import MoviesListItem from './MoviesListItem';
 import loadingGif from '../../assets/ghibli-loading.gif';
+import fetchUserData from '../../store/user-data-actions';
+import MoviesListItem from './MoviesListItem';
 
 const MoviesList = () => {
   const error = useSelector((state) => state.moviesData.error);
   const movies = useSelector((state) => state.moviesData.movies);
   const isLoading = useSelector((state) => state.moviesData.isLoading);
 
+  const dispatch = useDispatch();
+  const firestore = useFirestore();
+  const { data: user } = useUser();
+
+  useEffect(() => {
+    if (!user) {
+      return;
+    }
+
+    console.log('effect');
+    dispatch(fetchUserData(firestore, user.uid));
+  }, [dispatch, user]);
+
   let content = <p>Found no movies.</p>;
 
-  if (movies.length > 0) {
+  if (movies.length > 0 && !isLoading) {
     content = movies.map((movie) => (
       <MoviesListItem
         key={movie.id}
         id={movie.id}
         title={movie.title}
+        posterUrl={movie.posterUrl}
+        description={movie.description}
         originalTitle={movie.originalTitle}
         originalTitleRomanised={movie.originalTitleRomanised}
-        description={movie.description}
-        posterUrl={movie.posterUrl}
       />
     ));
   }
@@ -37,7 +53,7 @@ const MoviesList = () => {
       <Slide in={isLoading} direction="down" timeout={500}>
         <Grid container flexDirection="column" alignItems="center">
           {isLoading && (
-            <Grid item xs={1} component="img" src={loadingGif} alt="loading-animation" />
+            <Grid item component="img" xs={1} src={loadingGif} alt="loading-animation" />
           )}
         </Grid>
       </Slide>

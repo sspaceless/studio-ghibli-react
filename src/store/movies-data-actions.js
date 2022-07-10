@@ -6,17 +6,11 @@ import { API_URL } from '../config';
 
 const fetchMoviesData = () => async (dispatch) => {
   const fetchData = async () => {
-    dispatch(
-      moviesDataActions.setIsLoading({ isLoading: true }),
-    );
-
-    dispatch(
-      moviesDataActions.setError({ error: null }),
-    );
+    dispatch(moviesDataActions.setIsLoading({ isLoading: true }));
+    dispatch(moviesDataActions.setError({ error: null }));
 
     const response = await axios.get(API_URL);
     const processedData = processApiData(response.data);
-
     return processedData;
   };
 
@@ -28,16 +22,9 @@ const fetchMoviesData = () => async (dispatch) => {
         movies: moviesData ?? [],
       }),
     );
-
-    dispatch(
-      moviesDataActions.setIsLoading({ isLoading: false }),
-    );
+    dispatch(moviesDataActions.setIsLoading({ isLoading: false }));
   } catch (e) {
-    dispatch(
-      dispatch(
-        moviesDataActions.setError({ error: e.message }),
-      ),
-    );
+    dispatch(moviesDataActions.setError({ error: e.message }));
   }
 };
 
