@@ -1,21 +1,18 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
-import { BOOKMARKS_FIELD } from '../config';
 
 export const initialState = {
-  data: {
-    [BOOKMARKS_FIELD]: {},
-  },
+  user: null,
   isLoading: false,
   error: null,
 };
 
-export const userDataSlice = createSlice({
-  name: 'userData',
+export const authSlice = createSlice({
+  name: 'auth',
   initialState,
   reducers: {
-    setUserData(state, action) {
-      state.data = action.payload.data;
+    setUser(state, action) {
+      state.user = action.payload.user;
     },
     setIsLoading(state, actions) {
       state.isLoading = actions.payload.isLoading;
@@ -26,4 +23,4 @@ export const userDataSlice = createSlice({
   },
 });
 
-export const userDataActions = userDataSlice.actions;
+export const authActions = authSlice.actions;

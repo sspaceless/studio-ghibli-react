@@ -12,7 +12,9 @@
   ],
   "parserOptions": {
     "ecmaFeatures": {
-      "jsx": true
+      "jsx": true,
+      "js": true,
+      "ts": true
     },
     "ecmaVersion": 12,
     "sourceType": "module"

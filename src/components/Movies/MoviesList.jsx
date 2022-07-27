@@ -3,30 +3,27 @@ import Slide from '@mui/material/Slide';
 import Typography from '@mui/material/Typography';
 
 import { useEffect } from 'react';
-import { useFirestore, useUser } from 'reactfire';
 import { useSelector, useDispatch } from 'react-redux';
 
-import loadingGif from '../../assets/ghibli-loading.gif';
-import fetchUserData from '../../store/user-data-actions';
 import MoviesListItem from './MoviesListItem';
+import loadingGif from '../../assets/ghibli-loading.gif';
+// import fetchUserData from '../../store/user-data/user-data-actions';
+import fetchMoviesData from '../../store/movies-data/movies-data-actions';
 
 const MoviesList = () => {
-  const error = useSelector((state) => state.moviesData.error);
-  const movies = useSelector((state) => state.moviesData.movies);
-  const isLoading = useSelector((state) => state.moviesData.isLoading);
+  const error = useSelector((state) => state.apiData.error);
+  const movies = useSelector((state) => state.apiData.movies);
+  const isLoading = useSelector((state) => state.apiData.isLoading);
 
   const dispatch = useDispatch();
-  const firestore = useFirestore();
-  const { data: user } = useUser();
 
   useEffect(() => {
-    if (!user) {
-      return;
-    }
-
-    console.log('effect');
-    dispatch(fetchUserData(firestore, user.uid));
-  }, [dispatch, user]);
+    // if (!user) {
+    //   return;
+    // }
+    // dispatch(fetchUserData(user.uid));
+    dispatch(fetchMoviesData());
+  }, [dispatch/* user */]);
 
   let content = <p>Found no movies.</p>;
 

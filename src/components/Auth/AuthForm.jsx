@@ -11,18 +11,20 @@ import propTypes from 'prop-types';
 import { useState } from 'react';
 import { useFormik } from 'formik';
 
-import authSchema from '../../schemas/auth-schema';
+import signupSchema from '../../schemas/signup-schema';
+import signinSchema from '../../schemas/signin-schema';
 
 const AuthForm = (props) => {
-  const { onSubmit, buttonText } = props;
+  const { isUserNew, onSubmit, buttonText } = props;
   const [isPasswordShown, setIsPasswordShown] = useState(false);
 
   const formik = useFormik({
     initialValues: {
+      username: '',
       email: '',
       password: '',
     },
-    validationSchema: authSchema,
+    validationSchema: isUserNew ? signupSchema : signinSchema,
     onSubmit,
   });
 
@@ -32,6 +34,20 @@ const AuthForm = (props) => {
 
   return (
     <FormControl component="form" onSubmit={formik.handleSubmit}>
+      {isUserNew && (
+        <TextField
+          variant="standard"
+          color="secondary"
+          margin="normal"
+          id="username"
+          type="username"
+          label="Username"
+          value={formik.values.username}
+          onChange={formik.handleChange}
+          error={formik.touched.username && Boolean(formik.errors.username)}
+          helperText={formik.touched.username && formik.errors.username}
+        />
+      )}
       <TextField
         variant="standard"
         color="secondary"
@@ -69,7 +85,7 @@ const AuthForm = (props) => {
           ),
         }}
       />
-      <Box m={1}>
+      <Box my={2}>
         <Button type="submit" variant="contained" fullWidth>
           {buttonText}
         </Button>
@@ -81,6 +97,7 @@ const AuthForm = (props) => {
 export default AuthForm;
 
 AuthForm.propTypes = {
+  isUserNew: propTypes.bool.isRequired,
   onSubmit: propTypes.func.isRequired,
   buttonText: propTypes.string.isRequired,
 };

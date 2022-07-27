@@ -11,20 +11,20 @@ import Avatar from '@mui/material/Avatar';
 import Slide from '@mui/material/Slide';
 import Box from '@mui/system/Box';
 
-import { useAuth, useUser } from 'reactfire';
 import { useNavigate } from 'react-router-dom';
-import { signOut } from 'firebase/auth';
+import { useDispatch, useSelector } from 'react-redux';
 
 import StyledMenu from './UI/StyledMenu';
 import logo from '../assets/ghibli-logo.svg';
+import { signout } from '../store/auth/auth-actions';
 
 const Header = () => {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const trigger = useScrollTrigger();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const auth = useAuth();
-  const { data: userData } = useUser();
+  const user = useSelector((state) => state.auth.user);
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -38,14 +38,14 @@ const Header = () => {
     navigate('/');
   };
 
-  const signInButtonClickHandler = () => {
+  const signinButtonClickHandler = () => {
     navigate('/authentication');
   };
 
-  const signOutButtonClickHandler = async () => {
+  const signoutButtonClickHandler = async () => {
     handleCloseUserMenu();
     try {
-      await signOut(auth);
+      dispatch(signout());
       navigate('/');
       window.location.reload();
     } catch (error) {
@@ -53,11 +53,11 @@ const Header = () => {
     }
   };
 
-  const menu = userData ? (
+  const menu = user ? (
     <>
       <Tooltip title="Open settings">
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-          <Avatar alt={userData.displayName} src={`${userData.photoURL}`} />
+          <Avatar alt={user.username} src={`${user.photoURL}`} />
         </IconButton>
       </Tooltip>
       <StyledMenu
@@ -65,13 +65,13 @@ const Header = () => {
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
-        <MenuItem onClick={signOutButtonClickHandler}>
+        <MenuItem onClick={signoutButtonClickHandler}>
           <Typography textAlign="center">Sign out</Typography>
         </MenuItem>
       </StyledMenu>
     </>
   ) : (
-    <Button color="inherit" onClick={signInButtonClickHandler}>
+    <Button color="inherit" onClick={signinButtonClickHandler}>
       Sign in
     </Button>
   );

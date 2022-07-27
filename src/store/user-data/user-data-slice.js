@@ -1,14 +1,20 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = { movies: [], isLoading: false, error: null };
+export const initialState = {
+  data: {
+    bookmarks: {},
+  },
+  isLoading: false,
+  error: null,
+};
 
-export const moviesDataSlice = createSlice({
-  name: 'moviesData',
+export const userDataSlice = createSlice({
+  name: 'userData',
   initialState,
   reducers: {
-    setMovies(state, action) {
-      state.movies = action.payload.movies;
+    setUserData(state, action) {
+      state.data = action.payload.data;
     },
     setIsLoading(state, actions) {
       state.isLoading = actions.payload.isLoading;
@@ -19,4 +25,4 @@ export const moviesDataSlice = createSlice({
   },
 });
 
-export const moviesDataActions = moviesDataSlice.actions;
+export const userDataActions = userDataSlice.actions;

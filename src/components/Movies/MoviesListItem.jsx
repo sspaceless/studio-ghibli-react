@@ -39,7 +39,7 @@ const MoviesListItem = (props) => {
               </Typography>
               <Grid container my={1} display="flex" flexDirection="row">
                 <Grid item mr={2} display="flex" flexDirection="column" alignItems="center">
-                  <RatingBar />
+                  <RatingBar id={id} />
                 </Grid>
                 <Divider orientation="vertical" flexItem />
                 <Grid item mx={1} display="flex" flexDirection="row" alignItems="center">
